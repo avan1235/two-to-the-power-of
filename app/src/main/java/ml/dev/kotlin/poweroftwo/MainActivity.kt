@@ -37,36 +37,14 @@ class MainActivity : ComponentActivity() {
             TwoToThePowerOfTenTheme {
                 Surface(color = Surface) {
                     Aligned(alignment = Alignment.Center) {
-                        var gameBoard by remember { mutableStateOf(GameBoard.random(gameSize = 4)) }
-                        val configuration = LocalConfiguration.current
-                        val screenHeight = configuration.screenHeightDp
-                        val screenWidth = configuration.screenWidthDp
-                        val blockSize = min(screenWidth, screenHeight).dp / (gameBoard.gameSize + 1)
-                        var drag = Offset.Zero
+                        val gameBoard = remember { mutableStateOf(GameBoard.random(gameSize = 4)) }
+                        val drag = remember { mutableStateOf(Offset.Zero) }
                         Aligned(
-                            modifier = Modifier.pointerInput(Unit) {
-                                detectDragGestures(
-                                    onDragEnd = {
-                                        val (x, y) = drag
-                                        val isHorizontal = abs(x) >= abs(y)
-                                        val swipe = when {
-                                            x > 0 && isHorizontal -> Swipe.RIGHT
-                                            x < 0 && isHorizontal -> Swipe.LEFT
-                                            y > 0 && !isHorizontal -> Swipe.DOWN
-                                            y < 0 && !isHorizontal -> Swipe.UP
-                                            else -> null
-                                        }
-                                        swipe?.let { gameBoard = gameBoard.swipe(it) }
-                                        drag = Offset.Zero
-                                    },
-                                    onDrag = { change, dragAmount ->
-                                        change.consumeAllChanges()
-                                        drag += dragAmount
-                                    })
-                            },
-                            alignment = Alignment.Center
+                            alignment = Alignment.Center,
+                            modifier = Modifier
+                                .pointerInput(Unit, gameSwipeGesture(gameBoard, drag))
                         ) {
-                            Board(gameBoard, blockSize)
+                            Board(gameBoard.value)
                         }
                     }
                 }

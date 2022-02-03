@@ -6,10 +6,6 @@ data class GameBoard(
     private val cells: List<BoardCell>,
     val gameSize: Int,
 ) {
-    init {
-        assert(gameSize * gameSize == cells.size)
-    }
-
     operator fun get(x: Int, y: Int): BoardCell? = cells[x, y]
 
     val gameRange: IntRange = 0 until gameSize
@@ -43,9 +39,11 @@ data class GameBoard(
                 }
             }
         }
-
-        return copy(cells = mutatedValues)
+        val updated = if (mutatedValues != cells) addRandom(mutatedValues) else cells
+        return copy(cells = updated)
     }
+
+    fun isFinished(): Boolean = Swipe.values().any { swipe(it) != this }
 
     private operator fun <V> MutableList<V>.set(x: Int, y: Int, value: V): Unit =
         if (x in gameRange && y in gameRange) this[y * gameSize + x] = value else Unit
@@ -65,8 +63,15 @@ data class GameBoard(
 }
 
 private val randomCell: () -> BoardCell = {
-    if (Random.nextBoolean()) NumberCell(
-        Random.nextInt(from = 0, until = 8192).takeLowestOneBit() shl 1
-    )
-    else EmptyCell
+    if (Random.nextBoolean()) randomNumberCell() else EmptyCell
+}
+
+private val randomNumberCell: () -> NumberCell = {
+    NumberCell(Random.nextInt(from = 0, until = 8192).takeLowestOneBit() shl 1)
+}
+
+private fun addRandom(cells: MutableList<BoardCell>): List<BoardCell> = cells.apply {
+    withIndex().filter { it.value == EmptyCell }
+        .randomOrNull()?.index
+        ?.let { this[it] = randomNumberCell() }
 }
