@@ -1,12 +1,16 @@
 package ml.dev.kotlin.poweroftwo
 
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +32,7 @@ class MainActivity : ComponentActivity() {
             TwoToThePowerOfTenTheme {
                 Surface(color = Surface) {
                     Aligned(alignment = Alignment.Center) {
-                        val gameBoard = remember { mutableStateOf(GameBoard.random(gameSize = 3)) }
+                        val gameBoard = remember { mutableStateOf(GameBoard.random(gameSize = 2)) }
                         val points = remember { mutableStateOf(0) }
                         val drag = remember { mutableStateOf(Offset.Zero) }
 
@@ -40,7 +44,11 @@ class MainActivity : ComponentActivity() {
                             Board(gameBoard.value)
                         }
                         if (gameBoard.value.isFinished()) {
-                            EndOfGame(score = points.value)
+                            EndOfGame(score = points.value) {
+                                gameBoard.value = GameBoard.random(gameSize = 2)
+                                points.value = 0
+                                drag.value = Offset.Zero
+                            }
                         }
                     }
                 }
@@ -50,7 +58,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun EndOfGame(score: Int) {
+fun EndOfGame(score: Int, reset: () -> Unit) {
     Aligned(alignment = Alignment.Center) {
         Column(
             modifier = Modifier
@@ -72,6 +80,29 @@ fun EndOfGame(score: Int) {
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
+            Spacer(modifier = Modifier.height(12.dp))
+            Box(
+                modifier = Modifier
+                    .clip(Shapes.medium)
+                    .background(FontDark)
+                    .padding(4.dp)
+                    .clickable { reset() },
+                contentAlignment = Alignment.Center
+            ) {
+                Row(modifier = Modifier.padding(8.dp)) {
+                    Icon(
+                        imageVector = Icons.Default.RestartAlt,
+                        contentDescription = "restart",
+                        tint = FontLight
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Restart",
+                        color = FontLight,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
         }
     }
 }
