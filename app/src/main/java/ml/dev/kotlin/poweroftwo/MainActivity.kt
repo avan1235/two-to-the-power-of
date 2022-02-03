@@ -35,9 +35,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TwoToThePowerOfTenTheme {
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = Surface) {
                     Aligned(alignment = Alignment.Center) {
-                        var gameBoard by remember { mutableStateOf(randomGame(gameSize = 4)) }
+                        var gameBoard by remember { mutableStateOf(GameBoard.random(gameSize = 4)) }
                         val configuration = LocalConfiguration.current
                         val screenHeight = configuration.screenHeightDp
                         val screenWidth = configuration.screenWidthDp

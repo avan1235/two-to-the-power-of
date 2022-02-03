@@ -1,5 +1,7 @@
 package ml.dev.kotlin.poweroftwo.game
 
+import kotlin.random.Random
+
 data class GameBoard(
     private val cells: List<BoardCell>,
     val gameSize: Int,
@@ -53,26 +55,18 @@ data class GameBoard(
 
     private operator fun <V> List<V>.get(xy: XY): V? = get(xy.x, xy.y)
     private operator fun <V> MutableList<V>.set(xy: XY, value: V): Unit = set(xy.x, xy.y, value)
+
+    companion object {
+        fun random(gameSize: Int): GameBoard = GameBoard(
+            cells = generateSequence(randomCell).take(gameSize * gameSize).toList(),
+            gameSize = gameSize
+        )
+    }
 }
 
-fun randomGame(gameSize: Int): GameBoard = GameBoard(
-    cells = listOf(
-        2,
-        2,
-        2,
-        2,
-        32,
-        64,
-        128,
-        256,
-        512,
-        1024,
-        2048,
-        4096,
-        8192,
-        null, null, null,
-    ).map(TO_BOARD_CELL),
-    gameSize
-)
-
-private val TO_BOARD_CELL: (Int?) -> BoardCell = { v -> v?.let { NumberCell(it) } ?: EmptyCell }
+private val randomCell: () -> BoardCell = {
+    if (Random.nextBoolean()) NumberCell(
+        Random.nextInt(from = 0, until = 8192).takeLowestOneBit() shl 1
+    )
+    else EmptyCell
+}
