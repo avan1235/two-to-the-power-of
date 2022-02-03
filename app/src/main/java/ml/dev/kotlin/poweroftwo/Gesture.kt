@@ -14,9 +14,11 @@ import kotlin.math.abs
 fun gameSwipeGesture(
     gameBoardState: MutableState<GameBoard>,
     dragState: MutableState<Offset>,
+    pointsState: MutableState<Int>,
 ): suspend PointerInputScope.() -> Unit = {
     var drag by dragState
     var gameBoard by gameBoardState
+    var points by pointsState
     detectDragGestures(
         onDragEnd = {
             val (x, y) = drag
@@ -28,7 +30,11 @@ fun gameSwipeGesture(
                 y < 0 && !isHorizontal -> Swipe.UP
                 else -> null
             }
-            swipe?.let { gameBoard = gameBoard.swipe(it) }
+            swipe?.let {
+                val (board, pointsChange) = gameBoard.swipe(it)
+                gameBoard = board
+                points += pointsChange
+            }
             drag = Offset.Zero
         },
         onDrag = { change, dragAmount ->
