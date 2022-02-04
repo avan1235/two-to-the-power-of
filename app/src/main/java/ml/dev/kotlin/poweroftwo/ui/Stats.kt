@@ -1,6 +1,5 @@
 package ml.dev.kotlin.poweroftwo.ui
 
-import androidx.compose.animation.*
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -12,24 +11,22 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RestartAlt
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ml.dev.kotlin.poweroftwo.game.EmptyCell
-import ml.dev.kotlin.poweroftwo.game.NumberCell
 import ml.dev.kotlin.poweroftwo.ui.theme.*
-import ml.dev.kotlin.poweroftwo.util.Aligned
 
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Stats(score: Int, reset: () -> Unit) {
-    Aligned(alignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         Column(
             modifier = Modifier
                 .clip(Shapes.large)
@@ -76,9 +73,3 @@ fun Stats(score: Int, reset: () -> Unit) {
         }
     }
 }
-
-private fun <T> cellAnimationSpec(): FiniteAnimationSpec<T> = tween(
-    durationMillis = 3000,
-    delayMillis = 0,
-    easing = LinearEasing
-)
