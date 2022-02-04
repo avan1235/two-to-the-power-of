@@ -2,7 +2,7 @@ package ml.dev.kotlin.poweroftwo.game
 
 sealed interface BoardCell
 object EmptyCell : BoardCell
-data class NumberCell(val number: Int) : BoardCell
+data class NumberCell constructor(val number: Int, val added: Boolean) : BoardCell
 
 data class XY(val x: Int, val y: Int)
 

@@ -23,32 +23,27 @@ import ml.dev.kotlin.poweroftwo.ui.theme.backgroundColor
 import ml.dev.kotlin.poweroftwo.ui.theme.fontColor
 
 @Composable
-fun Cell(boardCell: BoardCell, blockSize: Dp, x: Int, y: Int) {
+fun Cell(boardCell: BoardCell, blockSize: Dp) {
     Box(
         modifier = Modifier
-            .offset(x = blockSize * x, y = blockSize * y)
+            .size(blockSize)
+            .padding(all = 4.dp)
+            .clip(Shapes.medium)
+            .background(
+                when (boardCell) {
+                    is NumberCell -> boardCell.number.backgroundColor
+                    EmptyCell -> BackgroundEmpty
+                }
+            ),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier
-                .size(blockSize)
-                .padding(all = 4.dp)
-                .clip(Shapes.medium)
-                .background(
-                    when (boardCell) {
-                        is NumberCell -> boardCell.number.backgroundColor
-                        EmptyCell -> BackgroundEmpty
-                    }
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            if (boardCell is NumberCell) {
-                Text(
-                    text = "${boardCell.number}",
-                    color = boardCell.number.fontColor,
-                    fontSize = with(LocalDensity.current) { (blockSize / 3).toSp() },
-                    fontWeight = FontWeight.Bold
-                )
-            }
+        if (boardCell is NumberCell) {
+            Text(
+                text = "${boardCell.number}",
+                color = boardCell.number.fontColor,
+                fontSize = with(LocalDensity.current) { (blockSize / 3).toSp() },
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
