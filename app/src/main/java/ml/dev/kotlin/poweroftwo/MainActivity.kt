@@ -1,5 +1,6 @@
 package ml.dev.kotlin.poweroftwo
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +23,7 @@ import ml.dev.kotlin.poweroftwo.ui.theme.FontDark
 import ml.dev.kotlin.poweroftwo.ui.theme.FontLight
 import ml.dev.kotlin.poweroftwo.ui.theme.Surface
 import ml.dev.kotlin.poweroftwo.ui.theme.PowerOfTwoTheme
+import ml.dev.kotlin.poweroftwo.util.LockScreenOrientation
 import ml.dev.kotlin.poweroftwo.util.OrientationBased
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PowerOfTwoTheme {
+                LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
                 Surface(color = Surface) { Game() }
             }
         }
