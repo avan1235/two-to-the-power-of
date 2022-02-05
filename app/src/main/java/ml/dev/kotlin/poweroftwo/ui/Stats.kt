@@ -38,13 +38,11 @@ fun Stats(score: Int, reset: () -> Unit) {
         ) {
             Text(
                 text = "Game Over",
-                fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Your Score: $score",
-                fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
             Spacer(modifier = Modifier.height(12.dp))
@@ -66,7 +64,6 @@ fun Stats(score: Int, reset: () -> Unit) {
                     Text(
                         text = "Restart",
                         color = FontLight,
-                        fontWeight = FontWeight.Bold
                     )
                 }
             }

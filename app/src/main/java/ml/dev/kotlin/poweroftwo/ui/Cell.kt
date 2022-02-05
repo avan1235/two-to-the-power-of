@@ -42,7 +42,6 @@ fun Cell(boardCell: BoardCell, blockSize: Dp) {
                 text = "${boardCell.number}",
                 color = boardCell.number.fontColor,
                 fontSize = with(LocalDensity.current) { (blockSize / 3).toSp() },
-                fontWeight = FontWeight.Bold
             )
         }
     }
