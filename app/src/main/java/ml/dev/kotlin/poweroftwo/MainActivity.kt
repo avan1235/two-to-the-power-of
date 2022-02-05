@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.RestartAlt
+import androidx.compose.material.icons.filled.Loop
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,34 +21,21 @@ import ml.dev.kotlin.poweroftwo.ui.Stats
 import ml.dev.kotlin.poweroftwo.ui.theme.FontDark
 import ml.dev.kotlin.poweroftwo.ui.theme.FontLight
 import ml.dev.kotlin.poweroftwo.ui.theme.Surface
-import ml.dev.kotlin.poweroftwo.ui.theme.TwoToThePowerOfTenTheme
+import ml.dev.kotlin.poweroftwo.ui.theme.PowerOfTwoTheme
 import ml.dev.kotlin.poweroftwo.util.OrientationBased
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TwoToThePowerOfTenTheme {
-                Surface(color = Surface) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Game()
-                        }
-                    }
-                }
+            PowerOfTwoTheme {
+                Surface(color = Surface) { Game() }
             }
         }
     }
 }
 
-private val BOARD_SIZES = listOf(3, 4, 5, 6, 7)
+private val BOARD_SIZES = listOf(2, 3, 4, 5, 6, 7)
 
 @Composable
 private fun Game() {
@@ -159,7 +146,7 @@ private fun TopBar(onRestart: () -> Unit, points: Int) {
         IconButton(onClick = onRestart) {
             Icon(
                 modifier = Modifier.size(36.dp),
-                imageVector = Icons.Default.RestartAlt,
+                imageVector = Icons.Default.Loop,
                 contentDescription = "restart",
                 tint = FontDark
             )

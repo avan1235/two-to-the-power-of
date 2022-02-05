@@ -18,7 +18,6 @@ val Background1024 = Color(0xFFEDC53F)
 val Background2048 = Color(0xFFEDC22E)
 val Background4096 = Color(0xFF3C3A32)
 val Background8192 = Color(0xFF3C3A32)
-
 val FontDark = Color(0xFF222222)
 val FontLight = Color(0xFFF9F6F2)
 

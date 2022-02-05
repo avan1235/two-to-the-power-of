@@ -1,8 +1,5 @@
 package ml.dev.kotlin.poweroftwo.ui
 
-import androidx.compose.animation.core.FiniteAnimationSpec
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,12 +7,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.RestartAlt
+import androidx.compose.material.icons.filled.Loop
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ml.dev.kotlin.poweroftwo.ui.theme.*
@@ -56,7 +52,7 @@ fun Stats(score: Int, reset: () -> Unit) {
             ) {
                 Row(modifier = Modifier.padding(8.dp)) {
                     Icon(
-                        imageVector = Icons.Default.RestartAlt,
+                        imageVector = Icons.Default.Loop,
                         contentDescription = "restart",
                         tint = FontLight
                     )
